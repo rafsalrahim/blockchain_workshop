@@ -1,0 +1,12 @@
+Install meta-mask from here: https://metamask.io/
+
+For Linux
+Commands for installing nodejs and Ganache-cli: 
+1.curl -sL https://deb.nodesource.com/setup_8.x | sudo -E bash -
+2.sudo apt-get install -y nodejs
+3.npm install -g ganache-cli
+
+
+For Windows
+	Ganache-gui is also available. For windows we can download ganache-gui(desktop application).
+Download ganache-gui  from here: https://github.com/trufflesuite/ganache/releases.

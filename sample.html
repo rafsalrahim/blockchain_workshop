@@ -1,0 +1,143 @@
+<html>
+<head>
+<link href="///home/rafsal/01-DEVELOPMENT/Workshop/blockchain/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="///home/rafsal/01-DEVELOPMENT/Workshop/blockchain/bootstrap.min.js"></script>
+<script src="///home/rafsal/01-DEVELOPMENT/Workshop/blockchain/jquery-3.3.1.min.js"></script>
+<script src="///home/rafsal/01-DEVELOPMENT/Workshop/blockchain/web3.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<br>
+<br>
+<body>
+<center>
+<div class="container">
+        <div class="row centered-form">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+        	<div class="panel panel-default">
+        		<div class="panel-heading">
+			    		<h3 class="panel-title"><small>Please sign up for your first</small> DApp</h3>
+						</div>
+						<div class="panel-body">
+			    		<form role="form">
+			    			<div class="row">
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			                <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="First Name">
+			    					</div>
+			    				</div>
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						<input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="Last Name">
+			    					</div>
+			    				</div>
+			    			</div>
+
+			    			<div class="form-group">
+			    				<input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email Address">
+			    			</div>
+
+			    			<div class="row">
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						<input type="number" name="phnum" id="phnum" class="form-control input-sm" placeholder="Phone Number">
+			    					</div>
+			    				</div>
+			    				
+			    			</div>
+			    			
+			    			<input type="submit" value="Register" id="register" class="btn btn-info btn-block">
+						
+			    		
+			    		</form>
+			    	</div>
+	    		</div>
+    		</div>
+    	</div>
+    </div>
+</center>
+ <script>
+    	if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        }
+        
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        
+        var TestingContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_fname",
+				"type": "string"
+			},
+			{
+				"name": "_lname",
+				"type": "string"
+			},
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_phnumber",
+				"type": "uint256"
+			}
+		],
+		"name": "newUser",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_pass",
+				"type": "uint256"
+			}
+		],
+		"name": "getUser",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]); 
+        
+        var TestingC = TestingContract.at('0x3c97251141c0392ff508baa5538b6466cf5b1cd7');
+        console.log(TestingC);
+        
+    
+    
+        $("#register").click(function() {
+         var ph=$("#phnum").val();
+console.log(ph);
+            
+            TestingC.newUser($("#first_name").val(),$("#last_name").val(), $("#email").val(),ph,{from: web3.eth.defaultAccount, gas:3000000});
+        });
+       
+        
+       </script>
+    
+    </body>
+   
+
+
+</head>
+</html> 

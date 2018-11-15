@@ -1,0 +1,138 @@
+<meta charset="utf-8"/>
+<html>
+<head>
+<link href="///home/rafsal/01-DEVELOPMENT/Workshop/blockchain/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="///home/rafsal/01-DEVELOPMENT/Workshop/blockchain/bootstrap.min.js"></script>
+<script src="///home/rafsal/01-DEVELOPMENT/Workshop/blockchain/jquery-3.3.1.min.js"></script>
+<script src="///home/rafsal/01-DEVELOPMENT/Workshop/blockchain/web3.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+<br>
+<br>
+<body>
+<center>
+<div class="container">
+        <div class="row centered-form">
+        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+        	<div class="panel panel-default">
+        		<div class="panel-heading">
+			    		<h3 class="panel-title">View Data</h3>
+			 			</div>
+			 			<div class="panel-body">
+			    		<form role="form">
+			    			<div class="row">
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			                <input type="text" name="phnum" id="phnum" class="form-control input-sm" placeholder="Phone Number">
+			    					</div>
+			    				</div>
+	
+			    			
+			    			<input type="button" value="View" id="view" name="view" onclick="get()" class="btn btn-info btn-block">
+						
+			    		
+			    		</form>
+			    	</div>
+	    		</div>
+    		</div>
+<div id="display" name="display">
+<br>
+
+</div>
+    	</div>
+    </div>
+</center>
+ <script>
+       if (typeof web3 !== 'undefined') {
+            web3 = new Web3(web3.currentProvider);
+        } else {
+            // set the provider you want from Web3.providers
+            web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
+        }
+        
+        web3.eth.defaultAccount = web3.eth.accounts[0];
+        
+        var TestingContract = web3.eth.contract([
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_fname",
+				"type": "string"
+			},
+			{
+				"name": "_lname",
+				"type": "string"
+			},
+			{
+				"name": "_email",
+				"type": "string"
+			},
+			{
+				"name": "_phnumber",
+				"type": "uint256"
+			}
+		],
+		"name": "newUser",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_pass",
+				"type": "uint256"
+			}
+		],
+		"name": "getUser",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			},
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	}
+]); 
+        
+        var TestingC = TestingContract.at('0x3c97251141c0392ff508baa5538b6466cf5b1cd7');
+        console.log(TestingC);
+        
+    
+    
+        function get(){
+
+             var userid = document.getElementById("phnum").value;
+console.log("user id"+userid);
+
+            var html_data='<br/><table id="example" class="table table-striped table-bordered" style="width:100%"><thead><tr><th>First Name</th><th>Last Name</th><th>Email</th></tr></thead><tbody>';
+            TestingC.getUser(userid,function(error, result){
+		console.log(result[0]);
+		html_data+='<tr><td>'+result[0]+'</td><td>'+result[1]+'</td><td>'+result[2]+'</td></tr>';
+		$("#display").html(html_data);
+		
+	});
+        };
+       
+        
+        
+       </script>
+    
+    </body>
+   
+
+
+</head>
+</html> 
